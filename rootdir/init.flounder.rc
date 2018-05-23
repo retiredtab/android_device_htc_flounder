@@ -24,7 +24,7 @@ on late-fs
     # Start services for bootanim
     start surfaceflinger
     start bootanim
-    start configstore-hal-1-0
+    start configstore-hal
     start gralloc-2-0
 
     # Mount RW partitions which need run fsck
