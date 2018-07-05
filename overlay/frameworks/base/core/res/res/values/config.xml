@@ -250,6 +250,9 @@
         <item>"/system/framework/arm64/boot-framework.oat"</item>
         <item>"/system/framework/arm64/boot-core-libart.oat"</item>
         <item>"/system/framework/oat/arm64/services.odex"</item>
+        <item>"/system/priv-app/SystemUI/SystemUI.apk"</item>
+        <item>"/system/lib64/libsurfaceflinger.so"</item>
+        <item>"/system/lib/libsurfaceflinger.so"</item>
    </string-array>
 
     <!-- Flag indicating which package name can access the persistent data partition -->
