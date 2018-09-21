@@ -12,8 +12,6 @@ on init
 
     start watchdogd
 
-    symlink /sdcard /storage/sdcard0
-
     write /sys/block/zram0/comp_algorithm lz4
     write /sys/block/zram0/max_comp_streams 2
 
