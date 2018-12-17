@@ -50,7 +50,6 @@ TARGET_BOARD_INFO_FILE := device/htc/flounder/board-info.txt
 TARGET_BOOTLOADER_BOARD_NAME := flounder
 
 USE_OPENGL_RENDERER := true
-NUM_FRAMEBUFFER_SURFACE_BUFFERS := 2
 BOARD_DISABLE_TRIPLE_BUFFERED_DISPLAY_SURFACES := true
 
 TARGET_RECOVERY_FSTAB := device/htc/flounder/rootdir/fstab.flounder

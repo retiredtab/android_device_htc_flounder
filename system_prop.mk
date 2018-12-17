@@ -41,7 +41,8 @@ PRODUCT_PROPERTY_OVERRIDES += \
     persist.sys.ui.hw=false \
     debug.hwui.use_buffer_age=false \
     debug.hwui.renderer=opengl \
-    debug.sf.latch_unsignaled=1
+    debug.sf.latch_unsignaled=1 \
+    ro.surface_flinger.max_frame_buffer_acquired_buffers=2
 
 # drmservice prop
 PRODUCT_PROPERTY_OVERRIDES += \
