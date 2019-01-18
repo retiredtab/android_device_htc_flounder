@@ -35,7 +35,6 @@ PRODUCT_PROPERTY_OVERRIDES += \
 # Display
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.opengles.version=196609 \
-    ro.sf.lcd_density=320 \
     persist.tegra.compositor=glcomposer \
     persist.tegra.decompression=cde-client \
     debug.hwc.force_gpu=1 \
