@@ -169,7 +169,7 @@ on property:sys.boot_completed=1
 on verity-logging
     exec u:r:slideshow:s0 -- /sbin/slideshow warning/verity_red_1 warning/verity_red_2
 
-service charger /charger
+service charger /system/bin/charger
     class charger
     user root
     group log root radio system
