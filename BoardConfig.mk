@@ -127,6 +127,9 @@ MALLOC_SVELTE := true
 
 USE_CLANG_PLATFORM_BUILD := true
 
+# Zygote Whitelist
+ZYGOTE_WHITELIST_PATH_EXTRA := \"/dev/nvhost-ctrl\",
+
 # Forcebly use the non-open-source parts
 include vendor/htc/flounder-common/BoardConfigVendor.mk
 ifeq ($(TARGET_PRODUCT),lineage_flounder_lte)
