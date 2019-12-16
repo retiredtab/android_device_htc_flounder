@@ -12,7 +12,7 @@ on init
     write /sys/class/android_usb/android0/f_ffs/aliases adb
     setprop sys.usb.ffs.aio_compat 1
 
-on property:sys.usb.config=mtp
+on property:sys.usb.config=mtp && property:sys.usb.configfs=0
     write /sys/class/android_usb/android0/enable 0
     write /sys/class/android_usb/android0/idVendor 18d1
     write /sys/class/android_usb/android0/idProduct 4ee1
@@ -20,7 +20,7 @@ on property:sys.usb.config=mtp
     write /sys/class/android_usb/android0/enable 1
     setprop sys.usb.state ${sys.usb.config}
 
-on property:sys.usb.config=mtp,adb
+on property:sys.usb.config=mtp,adb && property:sys.usb.configfs=0
     write /sys/class/android_usb/android0/enable 0
     write /sys/class/android_usb/android0/idVendor 18d1
     write /sys/class/android_usb/android0/idProduct 4ee2
@@ -32,7 +32,7 @@ on property:sys.usb.config=mtp,adb
     start adbd
     setprop sys.usb.state ${sys.usb.config}
 
-on property:sys.usb.config=rndis
+on property:sys.usb.config=rndis && property:sys.usb.configfs=0
     write /sys/class/android_usb/android0/enable 0
     write /sys/class/android_usb/android0/idVendor 18d1
     write /sys/class/android_usb/android0/idProduct 4ee3
@@ -41,7 +41,7 @@ on property:sys.usb.config=rndis
     write /sys/class/android_usb/android0/enable 1
     setprop sys.usb.state ${sys.usb.config}
 
-on property:sys.usb.config=rndis,adb
+on property:sys.usb.config=rndis,adb && property:sys.usb.configfs=0
     write /sys/class/android_usb/android0/enable 0
     write /sys/class/android_usb/android0/idVendor 18d1
     write /sys/class/android_usb/android0/idProduct 4ee4
@@ -53,7 +53,7 @@ on property:sys.usb.config=rndis,adb
     start adbd
     setprop sys.usb.state ${sys.usb.config}
 
-on property:sys.usb.config=ptp
+on property:sys.usb.config=ptp && property:sys.usb.configfs=0
     write /sys/class/android_usb/android0/enable 0
     write /sys/class/android_usb/android0/idVendor 18d1
     write /sys/class/android_usb/android0/idProduct 4ee5
@@ -61,7 +61,7 @@ on property:sys.usb.config=ptp
     write /sys/class/android_usb/android0/enable 1
     setprop sys.usb.state ${sys.usb.config}
 
-on property:sys.usb.config=ptp,adb
+on property:sys.usb.config=ptp,adb && property:sys.usb.configfs=0
     write /sys/class/android_usb/android0/enable 0
     write /sys/class/android_usb/android0/idVendor 18d1
     write /sys/class/android_usb/android0/idProduct 4ee6
@@ -74,7 +74,7 @@ on property:sys.usb.config=ptp,adb
     setprop sys.usb.state ${sys.usb.config}
 
 # USB midi configuration
-on property:sys.usb.config=midi
+on property:sys.usb.config=midi && property:sys.usb.configfs=0
     write /sys/class/android_usb/android0/enable 0
     write /sys/class/android_usb/android0/idVendor 18d1
     write /sys/class/android_usb/android0/idProduct 4ee8
@@ -84,7 +84,7 @@ on property:sys.usb.config=midi
     setprop sys.usb.state ${sys.usb.config}
 
 # USB midi configuration, with adb
-on property:sys.usb.config=midi,adb
+on property:sys.usb.config=midi,adb && property:sys.usb.configfs=0
     write /sys/class/android_usb/android0/enable 0
     write /sys/class/android_usb/android0/idVendor 18d1
     write /sys/class/android_usb/android0/idProduct 4ee9
@@ -94,7 +94,7 @@ on property:sys.usb.config=midi,adb
     setprop sys.usb.state ${sys.usb.config}
 
 # diag
-on property:sys.usb.config=diag
+on property:sys.usb.config=diag && property:sys.usb.configfs=0
     write /sys/class/android_usb/android0/enable 0
     write /sys/class/android_usb/android0/idVendor 0bb4
     write /sys/class/android_usb/android0/idProduct 0c07
@@ -107,7 +107,7 @@ on property:sys.usb.config=diag
     setprop sys.usb.state ${sys.usb.config}
 
 # rmnet
-on property:sys.usb.config=rmnet
+on property:sys.usb.config=rmnet && property:sys.usb.configfs=0
     write /sys/class/android_usb/android0/enable 0
     write /sys/class/android_usb/android0/idVendor 0bb4
     write /sys/class/android_usb/android0/idProduct 0fda
@@ -120,7 +120,7 @@ on property:sys.usb.config=rmnet
     setprop sys.usb.state ${sys.usb.config}
 
 #diag, modem, rmnet
-on property:sys.usb.config=diag,modem,rmnet
+on property:sys.usb.config=diag,modem,rmnet && property:sys.usb.configfs=0
     write /sys/class/android_usb/android0/enable 0
     write /sys/class/android_usb/android0/idVendor 0bb4
     write /sys/class/android_usb/android0/idProduct 0fd8
