@@ -129,6 +129,9 @@ BOARD_CHARGER_ENABLE_SUSPEND := true
 
 MALLOC_SVELTE := true
 
+# Shims
+TARGET_LD_SHIM_LIBS += /system/vendor/lib/hw/camera.tegra132.so|/system/vendor/lib/libcamera_shim.so
+
 # Zygote Whitelist
 ZYGOTE_WHITELIST_PATH_EXTRA := \"/dev/nvhost-ctrl\",\"/dev/nvmap\",
 
