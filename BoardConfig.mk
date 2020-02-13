@@ -126,7 +126,7 @@ BOARD_CHARGER_ENABLE_SUSPEND := true
 MALLOC_SVELTE := true
 
 # Zygote Whitelist
-ZYGOTE_WHITELIST_PATH_EXTRA := \"/dev/nvhost-ctrl\",
+ZYGOTE_WHITELIST_PATH_EXTRA := \"/dev/nvhost-ctrl\",\"/dev/nvmap\",
 
 # Forcebly use the non-open-source parts
 include vendor/htc/flounder-common/BoardConfigVendor.mk
