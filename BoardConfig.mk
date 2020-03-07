@@ -53,7 +53,6 @@ NUM_FRAMEBUFFER_SURFACE_BUFFERS := 3
 
 TARGET_RECOVERY_FSTAB := device/htc/flounder/rootdir/fstab.flounder
 TARGET_RECOVERY_PIXEL_FORMAT := RGBX_8888
-
 TARGET_USERIMAGES_USE_EXT4 := true
 TARGET_USERIMAGES_USE_F2FS := true
 
@@ -92,6 +91,9 @@ BOARD_VENDOR_USE_SENSOR_HAL := sensor_hub
 # GPS related defines
 TARGET_NO_RPC := true
 BOARD_USES_QCOM_HARDWARE_GPS := true
+
+# Lineage Hardware
+BOARD_HARDWARE_CLASS := $(DEVICE_PATH)/lineagehw
 
 # HIDL
 DEVICE_MANIFEST_FILE := device/htc/flounder/manifest.xml
