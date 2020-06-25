@@ -41,7 +41,8 @@ PRODUCT_PROPERTY_OVERRIDES += \
     debug.hwc.force_gpu=1 \
     persist.sys.ui.hw=false \
     debug.hwui.use_buffer_age=false \
-    debug.hwui.renderer=opengl
+    debug.hwui.renderer=opengl \
+    debug.sf.latch_unsignaled=1
 
 # drmservice prop
 PRODUCT_PROPERTY_OVERRIDES += \
