@@ -23,11 +23,11 @@ PRODUCT_PACKAGES := \
     wpa_supplicant.conf
 
 PRODUCT_COPY_FILES := \
-    $(LOCAL_PATH)/init.flounder.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/init.rc \
-    $(LOCAL_PATH)/init.flounder.usb.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/init.usb.rc \
-    $(LOCAL_PATH)/init.recovery.flounder.rc:root/init.recovery.flounder.rc \
-    $(LOCAL_PATH)/fstab.flounder:$(TARGET_COPY_OUT_VENDOR)/etc/fstab.flounder \
-    $(LOCAL_PATH)/ueventd.flounder.rc:$(TARGET_COPY_OUT_VENDOR)/ueventd.rc
+    $(LOCAL_PATH)/rootdir/init.flounder.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/init.rc \
+    $(LOCAL_PATH)/rootdir/init.flounder.usb.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/init.usb.rc \
+    $(LOCAL_PATH)/rootdir/init.recovery.flounder.rc:root/init.recovery.flounder.rc \
+    $(LOCAL_PATH)/rootdir/fstab.flounder:$(TARGET_COPY_OUT_VENDOR)/etc/fstab.flounder \
+    $(LOCAL_PATH)/rootdir/ueventd.flounder.rc:$(TARGET_COPY_OUT_VENDOR)/ueventd.rc
 
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/touch/touch_fusion.cfg:$(TARGET_COPY_OUT_VENDOR)/firmware/touch_fusion.cfg \
@@ -38,7 +38,7 @@ PRODUCT_COPY_FILES += \
 
 # headset keylayout
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/h2w_headset.kl:$(TARGET_COPY_OUT_VENDOR)/usr/keylayout/h2w_headset.kl
+    $(LOCAL_PATH)/keylayout/h2w_headset.kl:$(TARGET_COPY_OUT_VENDOR)/usr/keylayout/h2w_headset.kl
 
 PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/tablet_core_hardware.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/tablet_core_hardware.xml \
@@ -69,14 +69,15 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.bluetooth_le.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.bluetooth_le.xml \
     frameworks/native/data/etc/android.hardware.opengles.aep.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.opengles.aep.xml \
     frameworks/native/data/etc/android.software.midi.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.software.midi.xml \
-    $(LOCAL_PATH)/com.nvidia.nvsi.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/com.nvidia.nvsi.xml
+    $(LOCAL_PATH)/permissions/com.nvidia.nvsi.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/com.nvidia.nvsi.xml
 
 PRODUCT_COPY_FILES += \
     frameworks/av/media/libstagefright/data/media_codecs_google_audio.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_google_audio.xml \
     frameworks/av/media/libstagefright/data/media_codecs_google_video.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_google_video.xml \
-    $(LOCAL_PATH)/media_codecs.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs.xml \
-    $(LOCAL_PATH)/media_codecs_performance.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_performance.xml \
-    $(LOCAL_PATH)/media_profiles_V1_0.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_profiles_V1_0.xml
+    $(LOCAL_PATH)/media/enctune.conf:system/etc/enctune.conf \
+    $(LOCAL_PATH)/media/media_codecs.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs.xml \
+    $(LOCAL_PATH)/media/media_codecs_performance.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_performance.xml \
+    $(LOCAL_PATH)/media/media_profiles_V1_0.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_profiles_V1_0.xml
 
 # Audio configuration
 USE_XML_AUDIO_POLICY_CONF := 1
@@ -87,18 +88,15 @@ PRODUCT_COPY_FILES += \
     frameworks/av/services/audiopolicy/config/default_volume_tables.xml:$(TARGET_COPY_OUT_VENDOR)/etc/default_volume_tables.xml \
     frameworks/av/services/audiopolicy/config/r_submix_audio_policy_configuration.xml:$(TARGET_COPY_OUT_VENDOR)/etc/r_submix_audio_policy_configuration.xml \
     frameworks/av/services/audiopolicy/config/usb_audio_policy_configuration.xml:$(TARGET_COPY_OUT_VENDOR)/etc/usb_audio_policy_configuration.xml \
-    $(LOCAL_PATH)/audio_effects.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_effects.xml \
-    $(LOCAL_PATH)/audio_policy_configuration.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_policy_configuration.xml \
-    $(LOCAL_PATH)/mixer_paths_0.xml:$(TARGET_COPY_OUT_VENDOR)/etc/mixer_paths_0.xml
+    $(LOCAL_PATH)/audio/configs/audio_effects.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_effects.xml \
+    $(LOCAL_PATH)/audio/configs/audio_policy_configuration.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_policy_configuration.xml \
+    $(LOCAL_PATH)/audio/configs/mixer_paths_0.xml:$(TARGET_COPY_OUT_VENDOR)/etc/mixer_paths_0.xml
 
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/enctune.conf:system/etc/enctune.conf
-
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/nvaudio_conf.xml:system/etc/nvaudio_conf.xml \
-    $(LOCAL_PATH)/nvcamera.conf:system/etc/nvcamera.conf \
-    $(LOCAL_PATH)/bcmdhd.cal:system/etc/wifi/bcmdhd.cal \
-    $(LOCAL_PATH)/bcmdhd_lte.cal:system/etc/wifi/bcmdhd_lte.cal
+    $(LOCAL_PATH)/audio/configs/nvaudio_conf.xml:system/etc/nvaudio_conf.xml \
+    $(LOCAL_PATH)/camera/nvcamera.conf:system/etc/nvcamera.conf \
+    $(LOCAL_PATH)/wifi/bcmdhd.cal:system/etc/wifi/bcmdhd.cal \
+    $(LOCAL_PATH)/wifi/bcmdhd_lte.cal:system/etc/wifi/bcmdhd_lte.cal
 
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/bluetooth/bcm4350b1.hcd:$(TARGET_COPY_OUT_VENDOR)/firmware/bcm4350b1.hcd \
@@ -245,22 +243,6 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     fsck.f2fs mkfs.f2fs
 
-PRODUCT_PROPERTY_OVERRIDES := \
-    wifi.interface=wlan0 \
-    ro.opengles.version=196609 \
-    ro.sf.lcd_density=320 \
-    ro.bt.bdaddr_path=/sys/module/flounder_bdaddress/parameters/bdaddress \
-    ro.frp.pst=/dev/block/platform/sdhci-tegra.3/by-name/PST \
-    ro.product.first_api_level=23 \
-    ro.ril.def.agps.mode=1 \
-    persist.tegra.compositor=glcomposer
-
-# setup dalvik vm configs.
-$(call inherit-product, frameworks/native/build/tablet-10in-xhdpi-2048-dalvik-heap.mk)
-# N9 has only two CPUs, so drop dex2oat pressure after boot at runtime
-PRODUCT_PROPERTY_OVERRIDES += \
-    dalvik.vm.dex2oat-threads=1
-
 # for off charging mode
 PRODUCT_PACKAGES += \
     charger \
@@ -273,8 +255,6 @@ PRODUCT_PACKAGES += \
     audio.usb.default \
     audio.r_submix.default \
     libhtcacoustic
-PRODUCT_PROPERTY_OVERRIDES += \
-    ro.audio.monitorRotation=true
 
 # for sound trigger on DSP
 PRODUCT_PACKAGES += \
@@ -287,27 +267,6 @@ PRODUCT_PACKAGES += \
 # for launcher layout
 #PRODUCT_PACKAGES += \
 #    VolantisLayout
-
-# drmservice prop
-PRODUCT_PROPERTY_OVERRIDES += \
-    drm.service.enabled=true
-
-# facelock properties
-PRODUCT_PROPERTY_OVERRIDES += \
-    ro.facelock.black_timeout=700 \
-    ro.facelock.det_timeout=2500 \
-    ro.facelock.rec_timeout=3500 \
-    ro.facelock.est_max_time=500
-
-# Allows healthd to boot directly from charger mode rather than initiating a reboot.
-PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
-    ro.enable_boot_charger_mode=1
-
-# Reduce client buffer size for fast audio output tracks
-# and configure audio low latency for 128 frames per buffer
-PRODUCT_PROPERTY_OVERRIDES += \
-    af.fast_track_multiplier=1 \
-    audio_hal.period_size=128
 
 # Vendor seccomp policy files for media components:
 PRODUCT_COPY_FILES += \
@@ -337,8 +296,6 @@ ifeq ($(TARGET_BUILD_VARIANT),eng)
     $(call add-product-dex-preopt-module-config,wifi-service,--generate-mini-debug-info)
 endif
 
-$(call inherit-product-if-exists, hardware/nvidia/tegra132/tegra132.mk)
-$(call inherit-product-if-exists, vendor/nvidia/proprietary-tegra132/tegra132-vendor.mk)
 $(call inherit-product, vendor/htc/flounder-common/flounder-common-vendor.mk)
 ifeq ($(TARGET_PRODUCT),lineage_flounder_lte)
     $(call inherit-product, vendor/htc/flounder_lte/flounder_lte-vendor.mk)
@@ -346,9 +303,9 @@ else
     $(call inherit-product, vendor/htc/flounder/flounder-vendor.mk)
 endif
 $(call inherit-product-if-exists, hardware/broadcom/wlan/bcmdhd/firmware/bcm4354/device-bcm.mk)
-$(call inherit-product-if-exists, vendor/htc/flounder/audio/lifevibes/lvve/device-vendor-lvve.mk)
-$(call inherit-product-if-exists, vendor/htc/flounder/audio/tfa/device-vendor-tfa.mk)
 
 # Add dependency of the proprietary keystore.flounder module.
 PRODUCT_PACKAGES += \
     libkeymaster_messages
+
+-include $(LOCAL_PATH)/system_prop.mk
