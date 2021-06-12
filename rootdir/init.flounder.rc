@@ -40,6 +40,10 @@ on post-fs-data
     # For a remount only the flags and the target mount point are relevant.
     mount dummy dummy /data remount nosuid nodev noatime rw seclabel,background_gc=on,user_xattr,acl,errors=panic
 
+    # Boot time fs tune
+    write /sys/block/mmcblk0/queue/read_ahead_kb 2048
+    write /sys/block/mmcblk0rpmb/queue/read_ahead_kb 2048
+
     # Previously files in /data/nvcam are owned by media, change the owner to cameraserver so it
     # can be accessed by Camera HAL in cameraserver.
     chown cameraserver camera /data/nvcam/factory_copy_0.bin
@@ -137,6 +141,9 @@ on fs
     start hwservicemanager
 
 on property:sys.boot_completed=1
+    setprop sys.io.scheduler "bfq"
+    write /sys/block/mmcblk0/queue/read_ahead_kb 128
+    write /sys/block/mmcblk0rpmb/queue/read_ahead_kb 128
     # Enable ZRAM on boot_complete
     swapon_all /vendor/etc/fstab.flounder
 
