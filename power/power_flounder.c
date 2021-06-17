@@ -46,12 +46,12 @@
 #define SVELTE_MAX_FREQ_PROP "ro.config.svelte.max_cpu_freq"
 #define SVELTE_LOW_POWER_MAX_FREQ_PROP "ro.config.svelte.low_power_max_cpu_freq"
 
-struct flounder_power_module {
+typedef struct flounder_power_module {
     struct power_module base;
     pthread_mutex_t lock;
     int boostpulse_fd;
     int boostpulse_warned;
-};
+} flounder_power_module;
 
 static bool low_power_mode = false;
 
@@ -232,17 +232,17 @@ static int flounder_power_open(const hw_module_t* module, const char* name,
     ALOGD("%s: enter; name=%s", __FUNCTION__, name);
     int retval = 0; /* 0 is ok; -1 is error */
     if (strcmp(name, POWER_HARDWARE_MODULE_ID) == 0) {
-        power_module_t *dev = (power_module_t *)calloc(1,
-                sizeof(power_module_t));
+        flounder_power_module *dev = (flounder_power_module *)calloc(1,
+                sizeof(flounder_power_module));
         if (dev) {
             /* Common hw_device_t fields */
-            dev->common.tag = HARDWARE_DEVICE_TAG;
-            dev->common.module_api_version = POWER_MODULE_API_VERSION_0_2;
-            dev->common.hal_api_version = HARDWARE_HAL_API_VERSION;
-            dev->init = power_init;
-            dev->setInteractive = power_set_interactive;
-            dev->powerHint = flounder_power_hint;
-            dev->setFeature = set_feature;
+            dev->base.common.tag = HARDWARE_DEVICE_TAG;
+            dev->base.common.module_api_version = POWER_MODULE_API_VERSION_0_2;
+            dev->base.common.hal_api_version = HARDWARE_HAL_API_VERSION;
+            dev->base.init = power_init;
+            dev->base.setInteractive = power_set_interactive;
+            dev->base.powerHint = flounder_power_hint;
+            dev->base.setFeature = set_feature;
             *device = (hw_device_t*)dev;
         } else
             retval = -ENOMEM;
