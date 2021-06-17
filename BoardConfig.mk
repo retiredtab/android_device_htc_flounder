@@ -35,7 +35,11 @@ BUILD_EMULATOR := false
 
 TARGET_NO_BOOTLOADER := true
 
-BOARD_KERNEL_CMDLINE += androidboot.hardware=flounder vmalloc=450M
+BOARD_KERNEL_CMDLINE += no_console_suspend=1
+BOARD_KERNEL_CMDLINE += tegra_wdt.enable_on_probe=1
+BOARD_KERNEL_CMDLINE += tegra_wdt.heartbeat=120
+BOARD_KERNEL_CMDLINE += vmalloc=450M
+BOARD_KERNEL_CMDLINE += androidboot.hardware=flounder
 
 TARGET_NO_RADIOIMAGE := true
 
