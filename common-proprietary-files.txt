@@ -160,6 +160,7 @@ vendor/lib/libnvomxilclient.so
 vendor/lib/libnvparser.so
 vendor/lib/libnvtnr.so
 vendor/lib/libnvtvmr.so
+vendor/lib/libstagefrighthw.so
 vendor/lib/libtsechdcp.so|1ae867e3d2f7b3c6c045c9fc2f23f0289776755a
 vendor/media/LMspeed_508.emd
 vendor/media/PFFprec_600.emd

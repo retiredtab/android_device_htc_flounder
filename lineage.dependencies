@@ -2,9 +2,5 @@
   {
     "repository": "android_kernel_htc_flounder",
     "target_path": "kernel/htc/flounder"
-  },
-  {
-    "repository": "LineageOS/android_hardware_nvidia_libstagefrighthw",
-    "target_path": "hardware/nvidia/linbstagefrighthw"
   }
 ]
