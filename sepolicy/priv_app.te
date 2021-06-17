@@ -1,1 +1,5 @@
 allow priv_app sysfs_swap:file r_file_perms;
+
+allow priv_app debugfs_nvmap:file r_file_perms;
+
+allow priv_app hal_memtrack_hwservice:hwservice_manager find;
