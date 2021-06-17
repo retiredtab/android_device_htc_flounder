@@ -1,6 +1,9 @@
 on early-init
     mount debugfs /sys/kernel/debug /sys/kernel/debug mode=755
 
+    # Set permissions so radio can read
+    chmod 0444 /proc/cmdline
+
 on init
     export LD_PRELOAD "libshim_zw.so"
 
