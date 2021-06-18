@@ -41,7 +41,8 @@
       <value>2.88</value>
       <value>2.88</value>
   </array>
-  <array name="cpu.speeds">
+  <item name="cpu.clusters.cores">2</item>
+  <array name="cpu.core_speeds.cluster0">
     <value>204000</value>
     <value>229500</value>
     <value>255000</value>
@@ -92,9 +93,9 @@
     <value>2499000</value>
   </array>
   <!-- CPU Power consumption in suspend -->
-  <item name="cpu.idle">6.95</item>
+  <item name="cpu.suspend">6.95</item>
   <!-- CPU Power consumption at different speeds -->
-  <array name="cpu.active">
+  <array name="cpu.core_power.cluster0">
     <value>92.06</value>
     <value>103.56</value>
     <value>115.07</value>
