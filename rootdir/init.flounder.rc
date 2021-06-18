@@ -162,6 +162,8 @@ on verity-logging
 
 service battery_charger /charger
     class charger
+    user root
+    group log root radio system
     seclabel u:r:healthd:s0
 
 # Set watchdog timer to 30 seconds and pet it every 10 seconds to get a 20 second margin
