@@ -80,6 +80,10 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/media/media_codecs_performance.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_performance.xml \
     $(LOCAL_PATH)/media/media_profiles_V1_0.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_profiles_V1_0.xml
 
+# Media / StagefrightCodec 2.0
+PRODUCT_PACKAGES += \
+    libstagefright_ccodec
+
 # Audio configuration
 USE_XML_AUDIO_POLICY_CONF := 1
 
