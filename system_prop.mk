@@ -43,7 +43,8 @@ PRODUCT_PROPERTY_OVERRIDES += \
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.opengles.version=196609 \
     ro.sf.lcd_density=320 \
-    persist.tegra.compositor=glcomposer
+    persist.tegra.compositor=glcomposer \
+    ro.zygote.disable_gl_preload=true
 
 # drmservice prop
 PRODUCT_PROPERTY_OVERRIDES += \
