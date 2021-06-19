@@ -9,6 +9,14 @@ LOCAL_VENDOR_MODULE := true
 include $(BUILD_SHARED_LIBRARY)
 
 include $(CLEAR_VARS)
+LOCAL_SRC_FILES := stdio_vsnprintf.cpp
+LOCAL_C_INCLUDES := bionic/libc/stdio
+LOCAL_SHARED_LIBRARIES := liblog
+LOCAL_MODULE := libs
+LOCAL_MODULE_TAGS := optional
+include $(BUILD_SHARED_LIBRARY)
+
+include $(CLEAR_VARS)
 LOCAL_SRC_FILES := zygote_whitelist.cpp
 LOCAL_C_INCLUDES := frameworks/base/core/jni \
                     system/core/base/include
