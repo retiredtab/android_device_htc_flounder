@@ -1,0 +1,3 @@
+# Access to read SOC family
+r_dir_file(untrusted_app, sysfs_socinfo)
+allow untrusted_app sysfs_gpu:file r_file_perms;

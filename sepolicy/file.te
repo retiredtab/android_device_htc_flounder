@@ -18,6 +18,11 @@ type sysfs_socinfo, sysfs_type, fs_type;
 
 type sysfs_tegra_fuse, sysfs_type, fs_type;
 
+# /sys/devices/platform/sdhci-tegra.*/mmc_host
+type sysfs_mmc_host, fs_type, sysfs_type;
+
+type sysfs_power_supply, fs_type, sysfs_type;
+
 type tlk_data_file, file_type, data_file_type, core_data_file_type;
 
 type debugfs_nvavp, debugfs_type, fs_type;

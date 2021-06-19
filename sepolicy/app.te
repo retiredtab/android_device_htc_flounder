@@ -1,0 +1,2 @@
+allow { appdomain -ephemeral_app -isolated_app } sysfs_gpu:file r_file_perms;
+allow appdomain sysfs_mmc_host:dir search;
