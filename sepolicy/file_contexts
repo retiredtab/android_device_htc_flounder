@@ -105,6 +105,8 @@
 
 /sys/devices/platform/htc_battery_bq2419x\.9/power_supply/charger/status             u:object_r:sysfs_power_supply:s0
 /sys/devices/platform/htc_battery_max17050\.8/power_supply/flounder-battery/present  u:object_r:sysfs_power_supply:s0
+/sys/devices/platform/tegra12-i2c\.0/i2c-0/0-0036/power_supply/battery/current_now    u:object_r:sysfs_power_supply:s0
+/sys/devices/platform/power-supply-extcon/power_supply/ac/type                       u:object_r:sysfs_power_supply:s0
 
 /sys/module/tegra_fuse/parameters(/.*)?    u:object_r:sysfs_tegra_fuse:s0
 
