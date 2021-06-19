@@ -47,7 +47,7 @@
 /vendor/bin/touch_fusion	u:object_r:touch_fusion_exec:s0
 
 # TEE
-/dev/tlk_device			u:object_r:tee_device:s0
+/dev/tlk_device			u:object_r:tlk_data_file:s0
 
 # Qualcomm MDM9K modem device
 # modem driver
@@ -120,7 +120,7 @@
 /dev/block/platform/sdhci-tegra\.3/by-name/MSC u:object_r:misc_block_device:s0
 
 # secure os storage
-/data/ss(/.*)?                         u:object_r:tee_data_file:s0
+/data/ss(/.*)?                         u:object_r:tlk_data_file:s0
 
 # tlk_daemon
 /vendor/bin/tlk_daemon                 u:object_r:tee_exec:s0
