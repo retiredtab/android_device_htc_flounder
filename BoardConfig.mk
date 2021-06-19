@@ -40,6 +40,7 @@ BOARD_KERNEL_CMDLINE += tegra_wdt.enable_on_probe=1
 BOARD_KERNEL_CMDLINE += tegra_wdt.heartbeat=120
 BOARD_KERNEL_CMDLINE += vmalloc=450M
 BOARD_KERNEL_CMDLINE += androidboot.hardware=flounder
+BOARD_KERNEL_CMDLINE += androidboot.selinux=permissive
 
 TARGET_NO_RADIOIMAGE := true
 

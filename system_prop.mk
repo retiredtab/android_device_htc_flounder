@@ -1,3 +1,10 @@
+# ADB
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.adb.secure=0 \
+    persist.service.adb.enable=1 \
+    service.adb.root=1 \
+    ro.secure= 0
+
 # API
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.product.first_api_level=23
