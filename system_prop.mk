@@ -9,7 +9,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
 # and configure audio low latency for 128 frames per buffer
 PRODUCT_PROPERTY_OVERRIDES += \
     af.fast_track_multiplier=1 \
-    audio_hal.period_size=128
+    vendor.audio_hal.period_size=128
 
 # Bluetooth
 PRODUCT_PROPERTY_OVERRIDES += \
