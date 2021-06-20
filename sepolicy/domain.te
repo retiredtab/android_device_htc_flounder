@@ -1,4 +1,5 @@
-r_dir_file(domain, sysfs_tegra_fuse)
+r_dir_file(domain -isolated_app, sysfs_socinfo)
+r_dir_file(domain -isolated_app, sysfs_tegra_fuse)
 
 # Why?
 allow domain debugfs_nvmap:dir search;

@@ -1,10 +1,10 @@
 # kickstart processes and scripts (system process)
 type kickstart, domain, device_domain_deprecated;
-type kickstart_exec, file_type, exec_type;
+type kickstart_exec, vendor_file_type, file_type, exec_type;
 
 init_daemon_domain(kickstart)
 
-# Spawn /system/bin/efsks and /system/bin/ks
+# Spawn /vendor/bin/efsks and /vendor/bin/ks
 allow kickstart kickstart_exec:file { open execute_no_trans getattr };
 
 # Let qcks access /dev/mdm node (modem driver)

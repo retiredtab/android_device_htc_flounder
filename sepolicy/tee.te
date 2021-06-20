@@ -12,3 +12,7 @@ allow tee mmc_rpmb_block_device:blk_file rw_file_perms;
 # data
 allow tee tee_data_file:dir create_dir_perms;
 # create files -- in global tee.te
+
+allow tee tlk_data_file:blk_file {getattr read};
+allow tee tlk_data_file:file {getattr read write};
+allow tee tlk_data_file:dir {getattr read write}; 
