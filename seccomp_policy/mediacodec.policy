@@ -5,3 +5,7 @@ geteuid32: 1
 getgid32: 1
 getegid32: 1
 getpid: 1
+sysinfo: 1
+uname: 1
+mkdirat: 1
+_llseek: 1
