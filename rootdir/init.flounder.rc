@@ -272,12 +272,12 @@ service qmuxd /vendor/bin/qmuxd
     class late_start
     disabled
     user system
-    group system wakelock radio
+    group system wakelock radio audio bluetooth gps nfc
 
 service netmgrd /vendor/bin/netmgrd
     class late_start
     disabled
-    group system radio
+    group root wifi wakelock radio inet
 
 service tlk_daemon /vendor/bin/tlk_daemon --storagedir /data/ss
     class main
