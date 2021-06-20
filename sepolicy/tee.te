@@ -15,3 +15,4 @@ allow tee tee_data_file:dir create_dir_perms;
 
 allow tee tlk_data_file:blk_file {getattr read};
 allow tee tlk_data_file:file {getattr read write};
+allow tee tlk_data_file:dir {getattr read write}; 
