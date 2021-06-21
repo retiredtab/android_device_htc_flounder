@@ -120,7 +120,14 @@ BOARD_WIDEVINE_OEMCRYPTO_LEVEL := 1
 # Don't dex preopt apps to avoid I/O congestion due to paging larger sized
 # pre-compiled .odex files as opposed to background generated interpret-only
 # odex files.
-WITH_DEXPREOPT_BOOT_IMG_AND_SYSTEM_SERVER_ONLY := true
+ifeq ($(HOST_OS),linux)
+  ifneq ($(TARGET_BUILD_VARIANT),eng)
+    ifeq ($(WITH_DEXPREOPT),)
+      WITH_DEXPREOPT := true
+      WITH_DEXPREOPT_BOOT_IMG_AND_SYSTEM_SERVER_ONLY := true
+    endif
+  endif
+endif
 
 TARGET_RELEASETOOLS_EXTENSIONS := device/htc/flounder
 
