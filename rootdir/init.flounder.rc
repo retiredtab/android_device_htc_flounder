@@ -20,6 +20,69 @@ on init
     # Swap in only 1 page at a time
     write /proc/sys/vm/page-cluster 0
 
+on boot
+    # power down interface
+    write /sys/class/rfkill/rfkill0/state 0
+
+    # keep verity metadata in cache a lot longer (tablet profile)
+    write /sys/module/dm_bufio/parameters/max_age_seconds 86400
+
+    write /sys/module/tegra3_emc/parameters/emc_enable 0
+    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor interactive
+    write /sys/devices/system/cpu/cpu1/cpufreq/scaling_governor interactive
+    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq 510000
+    write /sys/devices/system/cpu/cpu1/cpufreq/scaling_min_freq 510000
+    write /sys/devices/system/cpu/cpuquiet/tegra_cpuquiet/enable 0
+
+    restorecon_recursive /sys/devices/system/cpu/cpufreq/interactive
+    chown system system /sys/devices/system/cpu/cpufreq/interactive/timer_rate
+    chmod 0660 /sys/devices/system/cpu/cpufreq/interactive/timer_rate
+    chown system system /sys/devices/system/cpu/cpufreq/interactive/timer_slack
+    chmod 0660 /sys/devices/system/cpu/cpufreq/interactive/timer_slack
+    chown system system /sys/devices/system/cpu/cpufreq/interactive/min_sample_time
+    chmod 0660 /sys/devices/system/cpu/cpufreq/interactive/min_sample_time
+    chown system system /sys/devices/system/cpu/cpufreq/interactive/hispeed_freq
+    chmod 0660 /sys/devices/system/cpu/cpufreq/interactive/hispeed_freq
+    chown system system /sys/devices/system/cpu/cpufreq/interactive/target_loads
+    chmod 0660 /sys/devices/system/cpu/cpufreq/interactive/target_loads
+    chown system system /sys/devices/system/cpu/cpufreq/interactive/go_hispeed_load
+    chmod 0660 /sys/devices/system/cpu/cpufreq/interactive/go_hispeed_load
+    chown system system /sys/devices/system/cpu/cpufreq/interactive/above_hispeed_delay
+    chmod 0660 /sys/devices/system/cpu/cpufreq/interactive/above_hispeed_delay
+    chown system system /sys/devices/system/cpu/cpufreq/interactive/boost
+    chmod 0660 /sys/devices/system/cpu/cpufreq/interactive/boost
+    chown system system /sys/devices/system/cpu/cpufreq/interactive/boostpulse
+    chmod 0660 /sys/devices/system/cpu/cpufreq/interactive/boostpulse
+    chown system system /sys/devices/system/cpu/cpufreq/interactive/input_boost
+    chmod 0660 /sys/devices/system/cpu/cpufreq/interactive/input_boost
+    chown system system /sys/devices/system/cpu/cpufreq/interactive/boostpulse_duration
+    chmod 0660 /sys/devices/system/cpu/cpufreq/interactive/boostpulse_duration
+    chown system system /sys/devices/system/cpu/cpufreq/interactive/io_is_busy
+    chmod 0660 /sys/devices/system/cpu/cpufreq/interactive/io_is_busy
+
+    # Enable CC4
+    write /sys/devices/system/cpu/cpu0/cpuidle/state1/disabled 0
+    write /sys/devices/system/cpu/cpu1/cpuidle/state1/disabled 0
+
+    # b/13568411: make lazy vfree flush thresholds match flush_tlb_range
+    write /proc/sys/vm/lazy_vfree_tlb_flush_all_threshold 524288
+
+    chmod 0444 /sys/kernel/debug/bq2419x-regs
+
+    write /proc/sys/net/core/rmem_max 1048576
+    write /proc/sys/net/core/wmem_max 1048576
+
+    # Wifi firmware reload path
+    chown wifi wifi /sys/module/bcmdhd/parameters/firmware_path
+
+on fs
+    mount_all /vendor/etc/fstab.flounder --early
+    # Update dm-verity state and set partition.*.verified properties
+    verity_update_state
+
+    # Start HW service manager early
+    start hwservicemanager
+
 on late-fs
     # Start services for bootanim
     start surfaceflinger
@@ -76,94 +139,12 @@ on post-fs-data
 
     setprop vold.post_fs_data_done 1
 
-on boot
-    # power down interface
-    write /sys/class/rfkill/rfkill0/state 0
-
-    # keep verity metadata in cache a lot longer (tablet profile)
-    write /sys/module/dm_bufio/parameters/max_age_seconds 86400
-
-    write /sys/module/tegra3_emc/parameters/emc_enable 0
-    #write /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq 1000000
-    #write /sys/module/cpu_tegra/parameters/cpu_user_cap 700000
-    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor interactive
-    write /sys/devices/system/cpu/cpu1/cpufreq/scaling_governor interactive
-    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq 510000
-    write /sys/devices/system/cpu/cpu1/cpufreq/scaling_min_freq 510000
-    #write /sys/devices/system/cpu/cpu0/cpufreq/scaling_setspeed 700000
-    #write /sys/devices/system/cpu/cpu1/cpufreq/scaling_setspeed 700000
-    #write /sys/devices/system/cpu/cpufreq/interactive/boost_factor 2
-    #write /sys/devices/system/cpu/cpufreq/interactive/sustain_load 80
-    write /sys/devices/system/cpu/cpuquiet/tegra_cpuquiet/enable 0
-
-    restorecon_recursive /sys/devices/system/cpu/cpufreq/interactive
-    chown system system /sys/devices/system/cpu/cpufreq/interactive/timer_rate
-    chmod 0660 /sys/devices/system/cpu/cpufreq/interactive/timer_rate
-    chown system system /sys/devices/system/cpu/cpufreq/interactive/timer_slack
-    chmod 0660 /sys/devices/system/cpu/cpufreq/interactive/timer_slack
-    chown system system /sys/devices/system/cpu/cpufreq/interactive/min_sample_time
-    chmod 0660 /sys/devices/system/cpu/cpufreq/interactive/min_sample_time
-    chown system system /sys/devices/system/cpu/cpufreq/interactive/hispeed_freq
-    chmod 0660 /sys/devices/system/cpu/cpufreq/interactive/hispeed_freq
-    chown system system /sys/devices/system/cpu/cpufreq/interactive/target_loads
-    chmod 0660 /sys/devices/system/cpu/cpufreq/interactive/target_loads
-    chown system system /sys/devices/system/cpu/cpufreq/interactive/go_hispeed_load
-    chmod 0660 /sys/devices/system/cpu/cpufreq/interactive/go_hispeed_load
-    chown system system /sys/devices/system/cpu/cpufreq/interactive/above_hispeed_delay
-    chmod 0660 /sys/devices/system/cpu/cpufreq/interactive/above_hispeed_delay
-    chown system system /sys/devices/system/cpu/cpufreq/interactive/boost
-    chmod 0660 /sys/devices/system/cpu/cpufreq/interactive/boost
-    chown system system /sys/devices/system/cpu/cpufreq/interactive/boostpulse
-    chmod 0660 /sys/devices/system/cpu/cpufreq/interactive/boostpulse
-    chown system system /sys/devices/system/cpu/cpufreq/interactive/input_boost
-    chmod 0660 /sys/devices/system/cpu/cpufreq/interactive/input_boost
-    chown system system /sys/devices/system/cpu/cpufreq/interactive/boostpulse_duration
-    chmod 0660 /sys/devices/system/cpu/cpufreq/interactive/boostpulse_duration
-    chown system system /sys/devices/system/cpu/cpufreq/interactive/io_is_busy
-    chmod 0660 /sys/devices/system/cpu/cpufreq/interactive/io_is_busy
-
-    # Enable CC4
-    write /sys/devices/system/cpu/cpu0/cpuidle/state1/disabled 0
-    write /sys/devices/system/cpu/cpu1/cpuidle/state1/disabled 0
-
-    # b/13568411: make lazy vfree flush thresholds match flush_tlb_range
-    write /proc/sys/vm/lazy_vfree_tlb_flush_all_threshold 524288
-
-    chmod 0444 /sys/kernel/debug/bq2419x-regs
-
-    write /proc/sys/net/core/rmem_max 1048576
-    write /proc/sys/net/core/wmem_max 1048576
-
-    # Wifi firmware reload path
-    chown wifi wifi /sys/module/bcmdhd/parameters/firmware_path
-
-on fs
-    mount_all /vendor/etc/fstab.flounder --early
-    # Update dm-verity state and set partition.*.verified properties
-    verity_update_state
-
-    # Start HW service manager early
-    start hwservicemanager
-
 on property:sys.boot_completed=1
     setprop sys.io.scheduler "bfq"
     write /sys/block/mmcblk0/queue/read_ahead_kb 128
     write /sys/block/mmcblk0rpmb/queue/read_ahead_kb 128
     # Enable ZRAM on boot_complete
     swapon_all /vendor/etc/fstab.flounder
-
-on verity-logging
-    exec u:r:slideshow:s0 -- /sbin/slideshow warning/verity_red_1 warning/verity_red_2
-
-service battery_charger /charger
-    class charger
-    seclabel u:r:healthd:s0
-
-# Set watchdog timer to 30 seconds and pet it every 10 seconds to get a 20 second margin
-service watchdogd /sbin/watchdogd 10 20
-    class core
-    disabled
-    seclabel u:r:watchdogd:s0
 
 # on eng builds, enable kgdb on the serial console
 on property:ro.build.type=eng
@@ -219,13 +200,18 @@ on property:ro.boot.baseband=US
     setprop rild.libargs "-e wwan0"
     setprop persist.radio.snapshot_enabled 1
 
-# bugreport is triggered by holding down volume down, volume up and power
-#service bugreport /system/bin/dumpstate -d -p -B -z \
-#        -o /data/data/com.android.shell/files/bugreports/bugreport
-#    class late_start
-#    disabled
-#    oneshot
-#    keycodes 114 115 116
+on verity-logging
+    exec u:r:slideshow:s0 -- /sbin/slideshow warning/verity_red_1 warning/verity_red_2
+
+service battery_charger /charger
+    class charger
+    seclabel u:r:healthd:s0
+
+# Set watchdog timer to 30 seconds and pet it every 10 seconds to get a 20 second margin
+service watchdogd /sbin/watchdogd 10 20
+    class core
+    disabled
+    seclabel u:r:watchdogd:s0
 
 service wpa_supplicant /vendor/bin/hw/wpa_supplicant \
     -iwlan0 -Dnl80211 -c/data/misc/wifi/wpa_supplicant.conf \
