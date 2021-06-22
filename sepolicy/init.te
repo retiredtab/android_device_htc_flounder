@@ -3,5 +3,5 @@ allow init tmpfs:lnk_file create_file_perms;
 # init writes to /sys/devices/system/cpu/cpufreq/interactive/rt_priority
 allow init self:capability sys_nice;
 
-allow init sysfs_mmc_host:file rw_file_perms;
+allow init sysfs_mmc_host:file create_file_perms;
 allow init sysfs_mmc_host:lnk_file rw_file_perms;
