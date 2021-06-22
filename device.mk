@@ -30,7 +30,8 @@ PRODUCT_COPY_FILES := \
     $(LOCAL_PATH)/rootdir/init.flounder.usb.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/init.usb.rc \
     $(LOCAL_PATH)/rootdir/init.recovery.flounder.rc:root/init.recovery.flounder.rc \
     $(LOCAL_PATH)/rootdir/fstab.flounder:$(TARGET_COPY_OUT_VENDOR)/etc/fstab.flounder \
-    $(LOCAL_PATH)/rootdir/ueventd.flounder.rc:$(TARGET_COPY_OUT_VENDOR)/ueventd.rc
+    $(LOCAL_PATH)/rootdir/ueventd.flounder.rc:$(TARGET_COPY_OUT_VENDOR)/ueventd.rc \
+    $(LOCAL_PATH)/rootdir/init_renderer.sh:$(TARGET_COPY_OUT_VENDOR)/bin/init_renderer.sh
 
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/touch/touch_fusion.cfg:$(TARGET_COPY_OUT_VENDOR)/firmware/touch_fusion.cfg \

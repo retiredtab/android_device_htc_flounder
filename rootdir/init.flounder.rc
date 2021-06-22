@@ -156,6 +156,9 @@ on fs
     # Start HW service manager early
     start hwservicemanager
 
+on property:dev.bootcomplete=1
+    start init_renderer
+
 on property:sys.boot_completed=1
     setprop sys.io.scheduler "bfq"
     write /sys/block/mmcblk0/queue/read_ahead_kb 128
@@ -281,3 +284,7 @@ service netmgrd /vendor/bin/netmgrd
 service tlk_daemon /vendor/bin/tlk_daemon --storagedir /data/ss
     class main
     group system
+
+service vendor.init_renderer /vendor/bin/init_renderer.sh
+    user root
+    oneshot
