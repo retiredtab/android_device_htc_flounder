@@ -39,14 +39,9 @@ PRODUCT_PROPERTY_OVERRIDES += \
     persist.tegra.compositor=glcomposer \
     persist.tegra.decompression=cde-client \
     debug.hwc.force_gpu=1 \
-    debug.hwc.winupdate=0 \
-    debug.egl.hw=0 \
-    debug.sf.hw=0 \
     persist.sys.ui.hw=false \
     debug.hwui.use_buffer_age=false \
-    debug.hwui.renderer=opengl \
-    debug.sf.latch_unsignaled=1 \
-    debug.sf.disable_backpressure=1 \
+    debug.hwui.renderer=opengl
 
 # drmservice prop
 PRODUCT_PROPERTY_OVERRIDES += \
