@@ -106,8 +106,8 @@
 
 /sys/devices/platform/htc_battery_bq2419x\.9/power_supply/charger(/.*)?             u:object_r:sysfs_power_supply:s0
 /sys/devices/platform/htc_battery_max17050\.8/power_supply/flounder-battery(/.*)?   u:object_r:sysfs_power_supply:s0
-/sys/devices/platform/power-supply-extcon/power_supply/ac/type                       u:object_r:sysfs_power_supply:s0
-/sys/devices/platform/power-supply-extcon/power_supply/usb/type                      u:object_r:sysfs_power_supply:s0
+/sys/devices/platform/power-supply-extcon/power_supply/ac(/.*)?                     u:object_r:sysfs_power_supply:s0
+/sys/devices/platform/power-supply-extcon/power_supply/usb(/.*)?                    u:object_r:sysfs_power_supply:s0
 
 /sys/module/tegra_fuse/parameters(/.*)?    u:object_r:sysfs_tegra_fuse:s0
 

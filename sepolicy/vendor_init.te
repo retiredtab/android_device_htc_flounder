@@ -1,0 +1,10 @@
+allow vendor_init camera_data_file:dir r_dir_perms;
+allow vendor_init efs_data_file:dir r_dir_perms;
+allow vendor_init gps_data_file:dir r_dir_perms;
+allow vendor_init kickstart_data_file:dir r_dir_perms;
+allow vendor_init nfc_data_file:dir r_dir_perms;
+allow vendor_init tlk_data_file:dir r_dir_perms;
+
+
+allow vendor_init camera_data_file:file create_file_perms;
+allow vendor_init proc:file write;
