@@ -36,7 +36,14 @@ PRODUCT_PROPERTY_OVERRIDES += \
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.opengles.version=196609 \
     ro.sf.lcd_density=320 \
-    persist.tegra.compositor=glcomposer
+    persist.tegra.compositor=glcomposer \
+    debug.hwc.force_gpu=1 \
+    debug.hwc.winupdate=0 \
+    debug.egl.hw=0 \
+    debug.sf.hw=0 \
+    persist.sys.ui.hw=false \
+    debug.hwui.use_buffer_age=false \
+    debug.hwui.renderer=opengl
 
 # drmservice prop
 PRODUCT_PROPERTY_OVERRIDES += \
