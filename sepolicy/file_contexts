@@ -143,3 +143,6 @@
 /vendor/bin/hw/android\.hardware\.dumpstate@1\.0-service.flounder      u:object_r:hal_dumpstate_impl_exec:s0
 /vendor/bin/hw/android\.hardware\.light@2\.0-service\.flounder         u:object_r:hal_light_default_exec:s0
 /vendor/bin/hw/android\.hardware\.usb@1\.0-service\.flounder           u:object_r:hal_usb_default_exec:s0
+
+# Init render script
+/(vendor|system/vendor)/bin/init\.renderer\.sh              u:object_r:init-renderer-sh_exec:s0

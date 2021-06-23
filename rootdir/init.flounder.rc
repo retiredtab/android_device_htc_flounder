@@ -157,7 +157,7 @@ on fs
     start hwservicemanager
 
 on property:dev.bootcomplete=1
-    start init_renderer
+    start vendor.init_renderer
 
 on property:sys.boot_completed=1
     setprop sys.io.scheduler "bfq"
@@ -282,6 +282,6 @@ service tlk_daemon /vendor/bin/tlk_daemon --storagedir /data/ss
     class main
     group system
 
-service vendor.init_renderer /vendor/bin/init_renderer.sh
+service vendor.init_renderer /vendor/bin/init.renderer.sh
     user root
     oneshot
