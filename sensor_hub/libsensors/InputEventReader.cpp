@@ -23,7 +23,7 @@
 #include <unistd.h>
 #include <string.h>
 
-#include <cutils/log.h>
+#include <log/log.h>
 
 #include "InputEventReader.h"
 

@@ -27,7 +27,7 @@
 #include <unistd.h>
 
 #define LOG_TAG "CwMcuSensor"
-#include <cutils/log.h>
+#include <log/log.h>
 #include <cutils/properties.h>
 
 #include "CwMcuSensor.h"

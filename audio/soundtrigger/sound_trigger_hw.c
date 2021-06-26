@@ -24,7 +24,7 @@
 #include <pthread.h>
 #include <sys/ioctl.h>
 #include <sys/prctl.h>
-#include <cutils/log.h>
+#include <log/log.h>
 #include <cutils/uevent.h>
 #include <stdlib.h>
 

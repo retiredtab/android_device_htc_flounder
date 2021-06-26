@@ -34,7 +34,7 @@
 #include <sys/resource.h>
 #include <sys/prctl.h>
 
-#include <cutils/log.h>
+#include <log/log.h>
 #include <cutils/str_parms.h>
 #include <cutils/atomic.h>
 #include <cutils/sched_policy.h>
