@@ -1,2 +1,0 @@
-# Read access to pseudo filesystems.
-r_dir_file(healthd, sysfs_power_supply)

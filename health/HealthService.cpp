@@ -14,13 +14,17 @@
  * limitations under the License.
  */
 
-#define LOG_TAG "healthd-flounder"
-#include <healthd/healthd.h>
-#include <sys/stat.h>
-#include <fcntl.h>
+#define LOG_TAG "android.hardware.health@2.0-service.flounder"
+
 #include <cutils/klog.h>
+#include <fcntl.h>
+#include <healthd/BatteryMonitor.h>
+#include <healthd/healthd.h>
+#include <health2/service.h>
+#include <sys/stat.h>
 #include <sys/types.h>
 #include <sys/sysinfo.h>
+#include <sys/uio.h>
 
 /* Nominal voltage for ENERGY_COUNTER computation */
 #define VOLTAGE_NOMINAL 3.7
@@ -44,14 +48,13 @@
 #define BATTERY_OVERTEMP_THRESHOLD (550)
 #define BATTERY_UNDERTEMP_THRESHOLD (0)
 
-using namespace android;
 static bool first_update_done;
 static int lasttime_soc;
 static unsigned int flounder_monitor_voltage;
 static long last_update_time;
 static bool force_decrease;
 
-static int read_sysfs(const char *path, char *buf, size_t size) {
+int read_sysfs(const char *path, char *buf, size_t size) {
     char *cp = NULL;
 
     int fd = open(path, O_RDONLY, 0);
@@ -69,11 +72,10 @@ static int read_sysfs(const char *path, char *buf, size_t size) {
     else
         buf[0] = '\0';
 
-    close(fd);
     return count;
 }
 
-static void write_sysfs(const char *path, char *s)
+void write_sysfs(const char *path, char *s)
 {
     char buf[80];
     int len;
@@ -90,11 +92,9 @@ static void write_sysfs(const char *path, char *s)
         strerror_r(errno, buf, sizeof(buf));
         KLOG_ERROR(LOG_TAG, "Error writing to %s: %s\n", path, buf);
     }
-
-    close(fd);
 }
 
-static int64_t get_int64_field(const char *path) {
+int64_t get_int64_field(const char *path) {
     const int SIZE = 21;
     char buf[SIZE];
 
@@ -105,40 +105,40 @@ static int64_t get_int64_field(const char *path) {
     return value;
 }
 
-static void flounder_status_check(struct BatteryProperties *props)
+void flounder_status_check(struct android::BatteryProperties* props)
 {
-    if (props->batteryStatus == BATTERY_STATUS_UNKNOWN)
-        props->batteryStatus = BATTERY_STATUS_DISCHARGING;
-    else if (props->batteryStatus == BATTERY_STATUS_FULL &&
+    if (props->batteryStatus == android::BATTERY_STATUS_UNKNOWN)
+        props->batteryStatus = android::BATTERY_STATUS_DISCHARGING;
+    else if (props->batteryStatus == android::BATTERY_STATUS_FULL &&
         props->batteryLevel < BATTERY_FULL)
-        props->batteryStatus = BATTERY_STATUS_CHARGING;
+        props->batteryStatus = android::BATTERY_STATUS_CHARGING;
 }
 
-static void flounder_health_check(struct BatteryProperties *props)
+void flounder_health_check(struct android::BatteryProperties* props)
 {
     if (props->batteryLevel >= BATTERY_FULL)
-        props->batteryHealth = BATTERY_HEALTH_GOOD;
+        props->batteryHealth = android::BATTERY_HEALTH_GOOD;
     else if (props->batteryLevel < BATTERY_LOW)
-        props->batteryHealth = BATTERY_HEALTH_DEAD;
+        props->batteryHealth = android::BATTERY_HEALTH_DEAD;
     else
-        props->batteryHealth = BATTERY_HEALTH_GOOD;
+        props->batteryHealth = android::BATTERY_HEALTH_GOOD;
 
-    if (props->batteryHealth == BATTERY_HEALTH_GOOD){
-        if (props->batteryTemperature > BATTERY_OVERTEMP_THRESHOLD)
-            props->batteryHealth = BATTERY_HEALTH_OVERHEAT;
-        else if(props->batteryTemperature < BATTERY_UNDERTEMP_THRESHOLD)
-            props->batteryHealth = BATTERY_HEALTH_COLD;
+    if (props->batteryHealth == android::BATTERY_HEALTH_GOOD){
+        if (props->batteryTemperature > android::BATTERY_OVERTEMP_THRESHOLD)
+            props->batteryHealth = android::BATTERY_HEALTH_OVERHEAT;
+        else if(props->batteryTemperature < android::BATTERY_UNDERTEMP_THRESHOLD)
+            props->batteryHealth = android::BATTERY_HEALTH_COLD;
     }
 }
 
-static void flounder_voltage_monitor_check(struct BatteryProperties *props)
+void flounder_voltage_monitor_check(struct BatteryProperties* props)
 {
     unsigned int monitor_voltage = 0;
     int vcell_mv;
     char voltage[10];
 
-    if (props->batteryStatus != BATTERY_STATUS_CHARGING &&
-        props->batteryStatus != BATTERY_STATUS_FULL && props->batteryLevel > 0) {
+    if (props->batteryStatus != android::BATTERY_STATUS_CHARGING &&
+        props->batteryStatus != android::BATTERY_STATUS_FULL && props->batteryLevel > 0) {
         vcell_mv = props->batteryVoltage;
         if (vcell_mv > BATTERY_CRITICAL_LOW_MV)
             monitor_voltage = BATTERY_CRITICAL_LOW_MV;
@@ -153,7 +153,7 @@ static void flounder_voltage_monitor_check(struct BatteryProperties *props)
     }
 }
 
-static void flounder_soc_adjust(struct BatteryProperties *props)
+void flounder_soc_adjust(struct android::BatteryProperties* props)
 {
     int soc_decrease;
     int soc, vcell_mv;
@@ -179,23 +179,23 @@ static void flounder_soc_adjust(struct BatteryProperties *props)
         first_update_done = true;
     }
 
-    if (props->batteryStatus == BATTERY_STATUS_FULL)
-        soc = BATTERY_FULL;
-    else if (props->batteryLevel >= BATTERY_FULL &&
-             lasttime_soc < BATTERY_FULL)
-        soc = BATTERY_FULL - 1;
+    if (props->batteryStatus == android::BATTERY_STATUS_FULL)
+        soc = android::BATTERY_FULL;
+    else if (props->batteryLevel >= android::BATTERY_FULL &&
+             lasttime_soc < android::BATTERY_FULL)
+        soc = android::BATTERY_FULL - 1;
     else
         soc = props->batteryLevel;
 
-    if (props->batteryLevel > BATTERY_FULL)
-        props->batteryLevel = BATTERY_FULL;
+    if (props->batteryLevel > android::BATTERY_FULL)
+        props->batteryLevel = android::BATTERY_FULL;
     else if (props->batteryLevel < 0)
         props->batteryLevel = 0;
 
     vcell_mv = props->batteryVoltage;
-    if (props->batteryStatus == BATTERY_STATUS_DISCHARGING ||
-        props->batteryStatus == BATTERY_STATUS_NOT_CHARGING ||
-        props->batteryStatus == BATTERY_STATUS_UNKNOWN) {
+    if (props->batteryStatus == android::BATTERY_STATUS_DISCHARGING ||
+        props->batteryStatus == android::BATTERY_STATUS_NOT_CHARGING ||
+        props->batteryStatus == android::BATTERY_STATUS_UNKNOWN) {
         if (vcell_mv >= BATTERY_CRITICAL_LOW_MV) {
             force_decrease = false;
             soc_decrease = lasttime_soc - soc;
@@ -243,7 +243,7 @@ done:
     props->batteryLevel = lasttime_soc = soc;
 }
 
-static void flounder_bat_monitor(struct BatteryProperties *props)
+void flounder_bat_monitor(struct BatteryProperties* props)
 {
     flounder_soc_adjust(props);
     flounder_health_check(props);
@@ -251,7 +251,7 @@ static void flounder_bat_monitor(struct BatteryProperties *props)
     flounder_voltage_monitor_check(props);
 }
 
-int healthd_board_battery_update(struct BatteryProperties *props)
+int healthd_board_battery_update(struct android::BatteryProperties* props)
 {
 
     flounder_bat_monitor(props);
@@ -260,13 +260,13 @@ int healthd_board_battery_update(struct BatteryProperties *props)
     return 0;
 }
 
-static int flounder_energy_counter(int64_t *energy)
+int flounder_energy_counter(int64_t *energy)
 {
     *energy = get_int64_field(CHARGE_COUNTER_EXT_PATH) * VOLTAGE_NOMINAL;
     return 0;
 }
 
-void healthd_board_init(struct healthd_config *config)
+void healthd_board_init(struct healthd_config*)
 {
     config->energyCounter = flounder_energy_counter;
 }
@@ -289,4 +289,8 @@ void healthd_board_mode_charger_set_backlight(bool)
 void healthd_board_mode_charger_init()
 {
 
+}
+
+int main() {
+    return health_service_main();
 }

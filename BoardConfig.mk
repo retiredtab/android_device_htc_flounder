@@ -82,8 +82,6 @@ BOARD_HAVE_BLUETOOTH_BCM := true
 BOARD_USES_GENERIC_AUDIO := false
 BOARD_USES_ALSA_AUDIO := true
 
-BOARD_HAL_STATIC_LIBRARIES := libhealthd.flounder
-
 BOARD_VENDOR_USE_SENSOR_HAL := sensor_hub
 
 # GPS related defines
