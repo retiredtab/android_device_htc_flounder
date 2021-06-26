@@ -49,6 +49,9 @@
 # TEE
 /dev/tlk_device			u:object_r:tee_device:s0
 
+# DRM
+/data/vendor/mediadrm(/.*)?                           u:object_r:mediadrm_vendor_data_file:s0
+
 # Qualcomm MDM9K modem device
 # modem driver
 /dev/mdm                               u:object_r:radio_device:s0
@@ -143,6 +146,7 @@
 /(vendor|system/vendor)/bin/hw/android\.hardware\.dumpstate@1\.0-service.flounder      u:object_r:hal_dumpstate_impl_exec:s0
 /(vendor|system/vendor)/bin/hw/android\.hardware\.light@2\.0-service\.flounder         u:object_r:hal_light_default_exec:s0
 /(vendor|system/vendor)/bin/hw/android\.hardware\.health@2\.0-service\.flounder    u:object_r:hal_health_default_exec:s0
+/(vendor|system/vendor)/bin/hw/android\.hardware\.drm@1\.2-service\.clearkey    u:object_r:hal_drm_clearkey_exec:s0
 
 # Init render script
 /(vendor|system/vendor)/bin/init\.renderer\.sh              u:object_r:init-renderer-sh_exec:s0
