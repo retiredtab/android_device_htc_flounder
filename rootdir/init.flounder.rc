@@ -172,7 +172,7 @@ on verity-logging
 service charger /system/bin/charger
     class charger
     user root
-    group log root radio system
+    group log root radio system graphics
     capabilities SYS_BOOT
     seclabel u:r:healthd:s0
 
