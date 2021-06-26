@@ -65,11 +65,11 @@
 # Qualcomm MSM Interface (QMI) devices
 /dev/socket/qmux_radio(/.*)?           u:object_r:qmuxd_socket:s0
 # service
-/vendor/bin/qcks                u:object_r:kickstart_exec:s0
-/vendor/bin/efsks               u:object_r:kickstart_exec:s0
-/vendor/bin/ks                  u:object_r:kickstart_exec:s0
-/vendor/bin/qmuxd               u:object_r:qmuxd_exec:s0
-/vendor/bin/netmgrd             u:object_r:netmgrd_exec:s0
+/(vendor|system/vendor)/bin/qcks                u:object_r:kickstart_exec:s0
+/(vendor|system/vendor)/bin/efsks               u:object_r:kickstart_exec:s0
+/(vendor|system/vendor)/bin/ks                  u:object_r:kickstart_exec:s0
+/(vendor|system/vendor)/bin/qmuxd               u:object_r:qmuxd_exec:s0
+/(vendor|system/vendor)/bin/netmgrd             u:object_r:netmgrd_exec:s0
 # database used by vendor RIL
 /data/misc/radio(/.*)?     u:object_r:ril_db_file:s0
 # Kickstart prepend used
@@ -131,7 +131,7 @@
 /data/ss(/.*)?                         u:object_r:tlk_data_file:s0
 
 # tlk_daemon
-/vendor/bin/tlk_daemon                 u:object_r:tee_exec:s0
+/(vendor|system/vendor)/bin/tlk_daemon                 u:object_r:tee_exec:s0
 
 # sysfs files used by wifi
 /sys/module/bcmdhd/parameters/firmware_path u:object_r:sysfs_wlan_fwpath:s0
@@ -140,9 +140,8 @@
 /sys/devices/platform/sdhci-tegra\.0/mmc_host/mmc1/mmc1:0001/mmc1:0001:2/net/wlan0/address u:object_r:sysfs_mac_address:s0
 
 # HALs
-/vendor/bin/hw/android\.hardware\.dumpstate@1\.0-service.flounder      u:object_r:hal_dumpstate_impl_exec:s0
-/vendor/bin/hw/android\.hardware\.light@2\.0-service\.flounder         u:object_r:hal_light_default_exec:s0
-/vendor/bin/hw/android\.hardware\.usb@1\.0-service\.flounder           u:object_r:hal_usb_default_exec:s0
+/(vendor|system/vendor)/bin/hw/android\.hardware\.dumpstate@1\.0-service.flounder      u:object_r:hal_dumpstate_impl_exec:s0
+/(vendor|system/vendor)/bin/hw/android\.hardware\.light@2\.0-service\.flounder         u:object_r:hal_light_default_exec:s0
 /(vendor|system/vendor)/bin/hw/android\.hardware\.health@2\.0-service\.flounder    u:object_r:hal_health_default_exec:s0
 
 # Init render script

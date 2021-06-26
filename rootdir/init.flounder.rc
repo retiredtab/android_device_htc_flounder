@@ -236,6 +236,9 @@ on property:ro.boot.baseband=US
     setprop rild.libargs "-e wwan0"
     setprop persist.radio.snapshot_enabled 1
 
+on property:apexd.status=ready
+    mount none /system/etc/swcodec/ld.config.txt /apex/com.android.media.swcodec/etc/ld.config.txt bind
+
 # bugreport is triggered by holding down volume down, volume up and power
 #service bugreport /system/bin/dumpstate -d -p -B -z \
 #        -o /data/data/com.android.shell/files/bugreports/bugreport
