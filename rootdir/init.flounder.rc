@@ -145,6 +145,14 @@ on property:sys.boot_completed=1
     write /sys/block/mmcblk0rpmb/queue/read_ahead_kb 128
     # Enable ZRAM on boot_complete
     swapon_all /vendor/etc/fstab.flounder
+    write /proc/sys/vm/dirty_background_ratio 10
+    write /proc/sys/vm/dirty_ratio 30
+    write /proc/sys/vm/dirty_expire_centisecs 3000
+    write /proc/sys/vm/dirty_writeback_centisecs 3000
+    write /proc/sys/vm/page-cluster 0
+    write /proc/sys/vm/stat_interval 10
+    write /proc/sys/vm/swappiness 100
+    write /proc/sys/vm/vfs_cache_pressure 60
 
 # on eng builds, enable kgdb on the serial console
 on property:ro.build.type=eng
