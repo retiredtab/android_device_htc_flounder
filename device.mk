@@ -242,6 +242,7 @@ PRODUCT_PACKAGES += \
 
 # Thermal HAL
 PRODUCT_PACKAGES += \
+    android.hardware.thermal@1.0-impl \
     thermal.flounder
 
 # USB HAL
