@@ -34,7 +34,6 @@
 
 #define BOOSTPULSE_PATH "/sys/devices/system/cpu/cpufreq/interactive/boostpulse"
 #define CPU_MAX_FREQ_PATH "/sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq"
-#define CPU_MIN_FREQ_PATH "/sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq"
 #define FACEDOWN_PATH "/sys/class/htc_sensorhub/sensor_hub/facedown_enabled"
 #define TOUCH_SYNA_INTERACTIVE_PATH "/sys/devices/platform/spi-tegra114.2/spi_master/spi2/spi2.0/input/input0/interactive"
 #define WAKE_GESTURE_PATH "/sys/devices/platform/spi-tegra114.2/spi_master/spi2/spi2.0/input/input0/wake_gesture"
@@ -52,7 +51,7 @@ typedef struct flounder_power_module {
     pthread_mutex_t lock;
     int boostpulse_fd;
     int boostpulse_warned;
-} flounder_power_module_t;
+} flounder_power_module;
 
 static bool low_power_mode = false;
 
@@ -124,7 +123,6 @@ static void power_set_interactive(struct power_module __unused *module, int on)
      */
     sysfs_write(CPU_MAX_FREQ_PATH,
                 (!on || low_power_mode) ? low_power_max_cpu_freq : max_cpu_freq);
-    sysfs_write(CPU_MIN_FREQ_PATH, on ? "510000" : "255000");
     sysfs_write(IO_IS_BUSY_PATH, on ? "1" : "0");
     sysfs_write(FACEDOWN_PATH, on ? "0" : "1");
     sysfs_write(TOUCH_SYNA_INTERACTIVE_PATH, on ? "1" : "0");
@@ -233,11 +231,9 @@ static int flounder_power_open(const hw_module_t* module, const char* name,
 {
     ALOGD("%s: enter; name=%s", __FUNCTION__, name);
     int retval = 0; /* 0 is ok; -1 is error */
-
     if (strcmp(name, POWER_HARDWARE_MODULE_ID) == 0) {
-        flounder_power_module_t *dev = (flounder_power_module_t *)calloc(1,
-                sizeof(flounder_power_module_t));
-
+        flounder_power_module *dev = (flounder_power_module *)calloc(1,
+                sizeof(flounder_power_module));
         if (dev) {
             /* Common hw_device_t fields */
             dev->base.common.tag = HARDWARE_DEVICE_TAG;
@@ -247,9 +243,6 @@ static int flounder_power_open(const hw_module_t* module, const char* name,
             dev->base.setInteractive = power_set_interactive;
             dev->base.powerHint = flounder_power_hint;
             dev->base.setFeature = set_feature;
-            pthread_mutex_init(&dev->lock, NULL);
-            dev->boostpulse_fd = -1;
-            dev->boostpulse_warned = 0;
             *device = (hw_device_t*)dev;
         } else
             retval = -ENOMEM;
